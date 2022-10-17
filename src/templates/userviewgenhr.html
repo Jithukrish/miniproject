@@ -1,0 +1,34 @@
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
+<!--<title>Untitled Document</title>-->
+<!--</head>-->
+{% extends "admindash.html" %}
+{% block body %}
+<body>
+<H2>GYM TIME</H2>
+<form id="form1" name="form1" method="post" action="wrkhraddd">
+  <table width="200" border="1" class="table table-dark table-bordered table-hover">
+    <tr>
+      <th scope="row">Day</th>
+      <td>From_time</td>
+      <td>To_time</td>
+
+    </tr>
+    {% for i in val %}
+    <tr>
+      <th scope="row">{{i['day']}}</th>
+      <td>{{i['from_time']}}</td>
+      <td>&nbsp;{{i['to_time']}}</td>
+      <!--<td><a href="delhr?id={{i['wrk_hid']}}">Delete</a></td>-->
+    </tr>
+    {%endfor %}
+    <!--<tr>-->
+      <!--<th colspan="4" scope="row"><a href="wrkhradd">Add new schedule</a></th>-->
+    <!--</tr>-->
+  </table>
+</form>
+</body>
+<!--</html>-->
+{% endblock %}

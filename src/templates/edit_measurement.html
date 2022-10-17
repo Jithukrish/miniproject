@@ -1,0 +1,92 @@
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
+<!--<title>Untitled Document</title>-->
+<!--</head>-->
+{% extends "trainerdash.html" %}
+{% block body %}
+<body>
+<form id="form1" name="form1" method="post" action="updatebody">
+  <table width="200" border="0" class="table table-dark table-bordered table-hover">
+    <!--<tr>-->
+      <!--<th scope="row">user</th>-->
+      <!--<td><label>-->
+      <!--<select name="select">-->
+        <!--{% for i in val%}-->
+        <!--<option value="{{i['u_id']}}">{{i['username']}}</option>-->
+        <!--{% endfor %}-->
+      <!--</select>-->
+      <!--</label></td>-->
+    <!--</tr>-->
+    <tr>
+      <th scope="row">date</th>
+      <td><label>
+        <input type="date" name="textfield28" value="{{ val['date'] }}"/>
+      </label></td>
+    </tr>
+    <tr>
+      <th scope="row">shoulder</th>
+      <td><label>
+        <input type="text" name="textfield2" value="{{ val['shoulder'] }}"/>
+      </label></td>
+    </tr>
+    <tr>
+      <th scope="row">left shoulder to elbow </th>
+      <td><label>
+        <input type="text" name="textfield4" value="{{ val['left_shoulder_to_elbow'] }}" />
+      </label></td>
+    </tr>
+    <tr>
+      <th scope="row">left elbow to hand </th>
+      <td><label>
+        <input type="text" name="textfield5" value="{{ val['left_elbow_to_hand'] }}" />
+      </label></td>
+    </tr>
+    <tr>
+      <th scope="row">right shoulder to elbow </th>
+      <td><label>
+        <input type="text" name="textfield6" value="{{ val['right_shoulder_to_elbow'] }}" />
+      </label></td>
+    </tr>
+    <tr>
+      <th scope="row">right elbow to hand</th>
+      <td><label>
+        <input type="text" name="textfield7" value="{{ val['right_elbow_to_hand'] }}" />
+      </label></td>
+    </tr>
+    <tr>
+      <th scope="row">left waist to knee </th>
+      <td><label>
+        <input type="text" name="textfield8" value="{{ val['left_waist_to_knee'] }}" />
+      </label></td>
+    </tr>
+    <tr>
+      <th scope="row">left knee to foot </th>
+      <td><label>
+        <input type="text" name="textfield9" value="{{ val['left_knee_to_foot'] }}" />
+      </label></td>
+    </tr>
+    <tr>
+      <th scope="row">right waist to knee </th>
+      <td><label>
+        <input type="text" name="textfield10" value="{{ val['right_waist_to_knee'] }}" />
+      </label></td>
+    </tr>
+    <tr>
+      <th scope="row">right knee to foot </th>
+      <td><label>
+        <input type="text" name="textfield11" value="{{ val['right_knee_to_foot'] }}" />
+      </label></td>
+    </tr>
+    <tr>
+      <th colspan="2" scope="row"><label>
+        <input type="submit" name="Submit" value="Submit" />
+      </label></th>
+    </tr>
+  </table>
+
+</form>
+</body>
+<!--</html>-->
+{% endblock %}

@@ -1,0 +1,43 @@
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
+<!--<title>Untitled Document</title>-->
+<!--</head>-->
+
+{% extends "admindash.html" %}
+{% block body %}
+<body><H2> VIEW TRAINER</H2>
+<blockquote>
+  <form id="form1" name="form1" method="post" action="">
+    <table width="200" border="1" class="table table-dark table-bordered table-hover">
+      <tr>
+        <th colspan="7" scope="row"><div align="right"><a href="addt">ADD TRAINER</a></div></th>
+      </tr>
+      <tr>
+        <th scope="row">Trainer </th>
+        <td>Place</td>
+        <td>Gender</td>
+        <td>Phone</td>
+        <td>Dob</td>
+        <td>Email</td>
+        <td>Type</td>
+      </tr>
+      {% for i in val %}
+      <tr>
+        <td>{{i['name']}}</td>
+        <td>{{i['place']}}</td>
+        <td>{{i['gender']}}</td>
+        <td>{{i['ph_no']}}</td>
+        <td>{{i['dob']}}</td>
+        <td>{{i['email']}}</td>
+        <td>{{i['type']}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    <div align="right"></div>
+  </form>
+</blockquote>
+</body>
+<!--</html>-->
+{% endblock %}

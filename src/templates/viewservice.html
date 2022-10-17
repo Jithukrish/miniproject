@@ -1,0 +1,33 @@
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
+<!--<title>Untitled Document</title>-->
+<!--</head>-->
+{% extends "userdash.html" %}
+{% block body %}
+<body><h2>VIEW SERVICE</h2>
+
+<form id="form1" name="form1" method="post" action="">
+  <table width="240" border="1"class="table table-dark table-bordered table-hover" >
+    <tr>
+      <th width="52" scope="row">Service name</th>
+      <td width="35">Image</td>
+      <td width="66">Description</td>
+
+    </tr>
+
+    {% for i in val1 %}
+    <tr>
+      <td>{{i['s_name']}}</td>
+      <td><img src="static/services/{{j['image']}}" height="100px" width="100px" /> </td>
+      <td>{{i['description']}}</td>
+
+    </tr>
+   {% endfor %}
+
+  </table>
+</form>
+</body>
+<!--</html>-->
+{% endblock %}

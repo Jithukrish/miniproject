@@ -1,0 +1,60 @@
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
+<!--<title>Untitled Document</title>-->
+<!--</head>-->
+{% extends "trainerdash.html" %}
+{% block body %}
+<body>
+<H2> ADD BODYMEASUREMENT</H2>
+<form id="form1" name="form1" method="post" action="">
+  <table width="200" border="1" class="table table-bordered table-dark table-hover">
+    <tr>
+      <th colspan="4" scope="row">user
+        <label></label></th>
+      <th colspan="8" scope="row">
+        <input type="text" name="textfield" />&nbsp;<input type="submit" value="SEARCH">
+        </th>
+    </tr>
+    <tr>
+      <th scope="row">User</th>
+      <td>Date</td>
+      <td>Shoulder</td>
+      <td>Right shoulder to elbow </td>
+      <td>Right elbow to hand </td>
+      <td>Left shoulder to elbow</td>
+      <td>Left elbow to hand</td>
+      <td>Right waist to knee </td>
+      <td> Right knee to foot </td>
+      <td>Left waist to knee</td>
+      <td>Left knee to foot</td>
+      <td></td>
+    </tr>
+
+    {% for i in val %}
+    <tr>
+      <th scope="row">{{i['username']}}</th>
+      <td>&nbsp;{{i['date']}}</td>
+      <td>{{i['shoulder']}}</td>
+      <td>{{i['right_shoulder_to_elbow']}}</td>
+      <td>{{i['right_elbow_to_hand']}}</td>
+      <td>{{i['left_shoulder_to_elbow']}}</td>
+      <td>&nbsp;{{i['left_elbow_to_hand']}}</td>
+      <td>&nbsp;{{i['right_waist_to_knee']}}</td>
+      <td>&nbsp;{{i['right_knee_to_foot']}}</td>
+      <td>&nbsp;{{i['left_waist_to_knee']}}</td>
+      <td>&nbsp;{{i['left_knee_to_foot']}}</td>
+<td><p><a href="editmesview?id={{i['bd_id']}}#about">Edit</a></p>
+      <p><a href="delete_mesr?id={{ i['bd_id'] }}#about">Delete</a></p></td>
+
+    </tr>
+    {% endfor %}
+    <tr>
+      <th colspan="11" scope="row"><a href="addbodyuser#about">Add new member</a></th>
+    </tr>
+  </table>
+</form>
+</body>
+<!--</html>-->
+{% endblock %}

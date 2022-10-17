@@ -1,0 +1,94 @@
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
+<!--<title>Untitled Document</title>-->
+<!--</head>-->
+{% extends "trainerdash.html" %}
+{% block body %}
+<body>
+<form name="form2" method="post" action="">
+</form>
+<form id="form1" name="form1" method="post" action="bodymes">
+  <table width="200" border="0" class="table table-bordered table-dark table-hover">
+    <tr>
+      <th scope="row">Username</th>
+      <td><label>
+        <select name="select">
+          <option>SELECT</option>
+          {% for i in val1 %}
+        <option value="{{i['l_id']}}">{{ i['username'] }}<option>
+        {% endfor %}
+        </select>
+
+
+      </label></td>
+    </tr>
+    <tr>
+      <th scope="row">date</th>
+      <td><label>
+        <input type="date" name="textfield" />
+      </label></td>
+    </tr>
+    <tr>
+      <th scope="row">shoulder</th>
+      <td><label>
+        <input type="text" name="textfield2" />
+      </label></td>
+    </tr>
+    <tr>
+      <th scope="row">right shoulder to elbow </th>
+      <td><label>
+        <input type="text" name="textfield4" />
+      </label></td>
+    </tr>
+    <tr>
+      <th scope="row">right elbow to hand </th>
+      <td><label>
+        <input type="text" name="textfield5" />
+      </label></td>
+    </tr>
+    <tr>
+      <th scope="row">left shoulder to elbow </th>
+      <td><label>
+        <input type="text" name="textfield6" />
+      </label></td>
+    </tr>
+    <tr>
+      <th scope="row">left elbow to hand</th>
+      <td><label>
+        <input type="text" name="textfield7" />
+      </label></td>
+    </tr>
+    <tr>
+      <th scope="row">right waist to knee </th>
+      <td><label>
+        <input type="text" name="textfield8" />
+      </label></td>
+    </tr>
+    <tr>
+      <th scope="row">right knee to foot </th>
+      <td><label>
+        <input type="text" name="textfield9" />
+      </label></td>
+    </tr>
+    <tr>
+      <th scope="row">left waist to knee </th>
+      <td><label>
+        <input type="text" name="textfield10" />
+      </label></td>
+    </tr>
+    <tr>
+      <th scope="row">left knee to foot </th>
+      <td><label>
+        <input type="text" name="textfield11" />
+      </label></td>
+    </tr>
+  </table>
+  <label>
+  <input type="submit" name="submit" value="submit" />
+  </label>
+</form>
+</body>
+<!--</html>-->
+{% endblock %}
