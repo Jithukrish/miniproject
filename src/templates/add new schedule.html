@@ -9,7 +9,7 @@
 <body>
 <H2>ADD NEW GYM TIME </H2>
 <form id="form1" name="form1" method="post" action="wrkhraddd">
-  <table width="200" border="1" CLASS="TABLE TABLE-DARK TABLE-BORDERED TABLE-HOVER">
+  <table width="200" border="1" CLASS="TABLE TABLE-primary TABLE-BORDERED TABLE-HOVER">
     <tr>
       <th scope="row">Day</th>
       <td><label>
@@ -26,18 +26,18 @@
     <tr>
       <th scope="row">From Time </th>
       <td><label>
-        <input type="text" name="textfield" />
+        <input type="text" name="textfield" required />
       </label></td>
     </tr>
     <tr>
       <th scope="row">To Time </th>
       <td><label>
-        <input type="text" name="textfield2" />
+        <input type="text" name="textfield2" required/>
       </label></td>
     </tr>
     <tr>
       <th colspan="2" scope="row"><label>
-        <input type="submit" name="Submit" value="Submit" class="btn btn-primary" />
+        <input type="submit" name="Submit" value="Submit" class="btn btn-outline-primary" />
       </label></th>
     </tr>
   </table>

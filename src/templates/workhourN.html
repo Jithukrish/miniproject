@@ -9,11 +9,11 @@
 <body>
 <H2>GYM TIME</H2>
 <form id="form1" name="form1" method="post" action="wrkhraddd">
-  <table width="200" border="1" class="table table-dark table-bordered table-hover">
+  <table width="200" border="1" class="table table-primary table-bordered table-hover">
     <tr>
-      <th scope="row">Day</th>
-      <td>From_time</td>
-      <td>To_time</td>
+      <th scope="row">DAY</th>
+      <th>FROM TIME</th>
+      <th>TO TIME</th>
       <td>&nbsp;</td>
     </tr>
     {% for i in val %}
@@ -21,11 +21,11 @@
       <th scope="row">{{i['day']}}</th>
       <td>{{i['from_time']}}</td>
       <td>&nbsp;{{i['to_time']}}</td>
-      <td><a href="delhr?id={{i['wrk_hid']}}">Delete</a></td>
+      <td><a href="delhr?id={{i['wrk_hid']}}">DELETE</a></td>
     </tr>
     {%endfor %}
     <tr>
-      <th colspan="4" scope="row"><a href="wrkhradd">Add new schedule</a></th>
+      <th colspan="4" scope="row"><a href="wrkhradd#about" class="btn btn-primary">ADD SCHEDULE</a></th>
     </tr>
   </table>
 </form>

@@ -11,18 +11,18 @@
     <tr>
       <th width="166" scope="row">Username</th>
       <td width="109"><label>
-        <input type="text" name="username" required>
+        <input type="text" name="username" required pattern="[A-Z a-z.]{3,25}" />
       </label></td>
     </tr>
     <tr>
       <th scope="row">Password</th>
       <td><label>
-        <input type="password" name="password" required>
+        <input type="password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required />>
       </label></td>
     </tr>
     <tr>
       <th colspan="2" scope="row"><label>
-        <input type="submit" name="Submit" value="Submit" required>
+        <input type="submit" name="Submit" value="Submit"  class="btn btn-outline-primary" required>
         <a href="register">New user</a></label></th>
     </tr>
 

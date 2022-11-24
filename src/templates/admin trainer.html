@@ -13,18 +13,18 @@
 <form id="form1" name="form1" method="post" action="">
   <table width="400" border="1">
     <tr>
-
-      <td>Trainer name </td>
-      <td>Place</td>
-      <td>Gender</td>
-      <td>Phone No </td>
-      <td>Email</td>
-       <td>Dob</td>
-      <td>Type</td>
+      <th>Sl NO</th>
+      <th>Trainer name </th>
+      <th>Place</th>
+      <th>Gender</th>
+      <th>Phone No </th>
+      <th>Email</th>
+       <th>Dob</th>
+      <th>Type</th>
     </tr>
     {% for i in val %}
     <tr>
-      <th scope="row"><label></label></th>
+      <th scope="row"><label>{{loop.index}}</label></th>
       <td><label>{{i['name']}}</label></td>
       <td><label>{{i['place']}}</label></td>
       <td><label>{{i['gender']}}</label></td>

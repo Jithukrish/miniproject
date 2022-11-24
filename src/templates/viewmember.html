@@ -9,25 +9,27 @@
 <body>
 <H2> MEMBERSHIP DETAILS</H2>
 <form id="form1" name="form1" method="post" action="">
-  <table width="200" border="1" CLASS="TABLE TABLE-DARK TABLE-BORDERED TABLE-HOVER">
+  <table width="200" border="1" CLASS="TABLE table-primary TABLE-BORDERED TABLE-HOVER">
     <tr>
-      <th scope="row">Username</th>
-      <td>Place</td>
-      <td>Gender</td>
-      <td>Dob</td>
-      <td>Email</td>
-      <td>Phone</td>
+      <th>Sl no</th>
+      <th scope="row">USER</th>
+      <th>PLACE</th>
+      <th>GENDER</th>
+      <th>DOB</th>
+      <th>EMAIL</th>
+      <th>PHONE</th>
       <td></td>
     </tr>
     {% for i in val%}
     <tr>
+      <td>{{loop.index}}</td>
       <th scope="row">{{i['username']}}</th>
       <td>{{i['place']}}</td>
       <td>&nbsp;{{i['gender']}}</td>
       <td>{{i['dob']}}&nbsp;</td>
       <td>{{i['email']}}&nbsp;</td>
       <td>&nbsp;{{i['ph_no']}}</td>
-      <td>&nbsp;<a href="viewmember?id={{i['l_id']}}">View</a> </td>
+      <td>&nbsp;<a href="viewmember?id={{i['l_id']}}#about">VIEW</a> </td>
     </tr>
     {% endfor %}
   </table>

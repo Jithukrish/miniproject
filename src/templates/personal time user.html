@@ -12,10 +12,20 @@
       <th colspan="2" scope="row">trainer</th>
       <td><label>
         <select name="select">
+          {% for i in val %}
+          <option value="{{i['t_id']}}">{{i['name']}}</option>
+          {% endfor %}
         </select>
       </label></td>
-      <td colspan="2"><label>
-        <input type="text" name="textfield" />
+    </tr>
+     <tr>
+      <th colspan="2" scope="row">user</th>
+      <td><label>
+        <select name="select1">
+          {% for i in val1 %}
+          <option value="{{i['t_id']}}">{{i['username']}}</option>
+          {% endfor %}
+        </select>
       </label></td>
     </tr>
     <tr>
@@ -25,12 +35,14 @@
       <td>day</td>
       <td rowspan="2"><a href="#">delete</a></td>
     </tr>
+    {% for i in val%}
     <tr>
-      <th scope="row">&nbsp;</th>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
+      <th scope="row">{{i['username']}}</th>
+      <td>&nbsp;{{i['from_time']}</td>
+      <td>&nbsp;{{i['to_time']}</td>
+      <td>&nbsp;{{i['day']}</td>
     </tr>
+    {% endfor %}
     <tr>
       <th colspan="5" scope="row"><label>
         <input type="submit" name="Submit" value="Submit" />

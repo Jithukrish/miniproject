@@ -9,15 +9,17 @@
 <body>
 <H2>GYM TIME</H2>
 <form id="form1" name="form1" method="post" action="wrkhraddd">
-  <table width="200" border="1" class="table table-dark table-bordered table-hover">
+  <table width="200" border="1" class="table table-primary table-bordered table-hover">
     <tr>
+      <th>SI NO</th>
       <th scope="row">Day</th>
-      <td>From_time</td>
-      <td>To_time</td>
+      <th>From_time</th>
+      <th>To_time</th>
 
     </tr>
     {% for i in val %}
     <tr>
+      <td>{{loop.index}}</td>
       <th scope="row">{{i['day']}}</th>
       <td>{{i['from_time']}}</td>
       <td>&nbsp;{{i['to_time']}}</td>

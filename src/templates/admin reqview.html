@@ -8,16 +8,19 @@
 {% block body %}
 <body><H2>REQUEST STATUS</H2>
 <form id="form1" name="form1" method="post" action="">
-  <table width="200" border="1" class="table table-dark table-bordered table-hover">
-    <tr>
+  <table width="200" border="1" class="table TABLE-primary table-bordered table-hover">
+    <tr><th>Sl no</th>
       <th scope="row">Request</th>
+      <td>Trainer</td>
       <td>Date</td>
       <td>Status</td>
     </tr>
     {% for i in val %}
-    <tr>
+    <tr><th>{{loop.index}}</th>
       <th scope="row">&nbsp;{{i['request']}}</th>
+      <td>&nbsp;{{i['name']}}</td>
       <td>&nbsp;{{i['date']}}</td>
+
       <td>&nbsp;{{i['status']}}</td>
     </tr>
     {% endfor %}

@@ -8,7 +8,7 @@
 {% block body %}
 <body><H2>BODYMEASUREMENT</H2>
 <form id="form1" name="form1" method="post" action="">
-  <table width="200" border="1" class="table table-dark table-bordered table-hover">
+  <table width="200" border="1" class="table table-primary table-bordered table-hover">
     <!--<tr>-->
       <!--<th colspan="4" scope="row">user-->
         <!--<label></label></th>-->
@@ -17,22 +17,22 @@
         <!--</th>-->
     <!--</tr>-->
     <tr>
-      <!--<th scope="row">User</th>-->
-      <td>Date</td>
-      <td>Shoulder</td>
-      <td>Right shoulder to elbow </td>
-      <td>Right elbow to hand </td>
-      <td>Left shoulder to elbow</td>
-      <td>Left elbow to hand</td>
-      <td>Right waist to knee </td>
-      <td>Right knee to foot </td>
-      <td>Left waist to knee</td>
-      <td>Left knee to foot</td>
+      <th>SI NO</th>
+      <th>Date</th>
+      <th>Shoulder</th>
+      <th>Right shoulder to elbow </th>
+      <th>Right elbow to hand </th>
+      <th>Left shoulder to elbow</th>
+      <th>Left elbow to hand</th>
+      <th>Right waist to knee </th>
+      <th>Right knee to foot </th>
+      <th>Left waist to knee</th>
+      <th>Left knee to foot</th>
 
     </tr>
 
     {% for i in val %}
-    <tr>
+    <tr><th>{{loop.index}}</th>
       <!--<th scope="row">{{i['username']}}</th>-->
       <td>&nbsp;{{i['date']}}</td>
       <td>{{i['shoulder']}}</td>

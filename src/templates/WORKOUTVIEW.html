@@ -1,0 +1,37 @@
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
+<!--<title>-->
+<!--&lt;!&ndash;<MMString:LoadString id="insertbar/formsButton" />&ndash;&gt;-->
+<!--</title>-->
+<!--&lt;!&ndash; Copyright 2000, 2001, 2002, 2003 Macromedia, Inc. All rights reserved. &ndash;&gt;-->
+<!--</head>-->
+{% extends "trainerdash.html" %}
+{% block body %}
+<body><H2>ADD WORKOUTPLAN</H2>
+<form id="form1" name="form1" method="post" action="WORKOUTADD2">
+  <table width="200" border="1" CLASS="TABLE table-primary TABLE-BORDERED TABLE-HOVER">
+    <tr><th>SI NO</th>
+      <th scope="row">WORKOUT</th>
+      <th>TIPS</th>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    {% for i in val %}
+    <tr><th>{{loop.index}}</th>
+      <th scope="row">{{i['workout']}}</th>
+      <td>&nbsp;{{i['tip']}}</td>
+      <td><a href="EDITWORKOUT?id={{i['wrk_id']}}">EDIT</a></td>
+      <td><a href="EDITWORKOUT2?id={{i['wrk_id']}}">DELETE</a></td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <th colspan="5" scope="row"> <input type="submit" name="Submit" value="ADD" class="btn btn-outline-primary" /></th>
+    </tr>
+  </table>
+</form>
+</body>
+<!--</html>-->
+
+{% endblock %}

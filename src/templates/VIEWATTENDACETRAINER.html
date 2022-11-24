@@ -1,0 +1,30 @@
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
+<!--<title>Untitled Document</title>-->
+<!--</head>-->
+{% extends "trainerdash.html" %}
+{% block body %}
+<body><H2> VIEW ATTENDACE OF USER</H2>
+<form id="form1" name="form1" method="post" action="">
+  <table width="200" border="1" class="table table-primary table-bordered table-hover">
+    <tr><th>SI NO</th>
+      <th height="32" scope="row">USERNAME</th>
+      <th>DATE</th>
+      <th>ATTENDANCE</th>
+
+    </tr>
+    {% for i in val %}
+    <tr><th>{{loop.index}}</th>
+      <th scope="row">&nbsp;{{i['username']}}</th>
+      <td>{{i['date']}}</td>
+      <td>{{i['attendance']}}</td>
+      <td rowspan="2"><a href="ATTANDANCEMARK2">ADD ATTENDANCE</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+</form>
+</body>
+<!--</html>-->
+{% endblock %}

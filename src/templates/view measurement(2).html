@@ -9,7 +9,7 @@
 <body>
 <H2> ADD BODYMEASUREMENT</H2>
 <form id="form1" name="form1" method="post" action="">
-  <table width="200" border="1" class="table table-bordered table-dark table-hover">
+  <table width="200" border="1" class="table table-bordered table-primary table-hover">
     <tr>
       <th colspan="4" scope="row">user
         <label></label></th>
@@ -18,18 +18,18 @@
         </th>
     </tr>
     <tr>
-      <th scope="row">User</th>
-      <td>Date</td>
-      <td>Shoulder</td>
-      <td>Right shoulder to elbow </td>
-      <td>Right elbow to hand </td>
-      <td>Left shoulder to elbow</td>
-      <td>Left elbow to hand</td>
-      <td>Right waist to knee </td>
-      <td> Right knee to foot </td>
-      <td>Left waist to knee</td>
-      <td>Left knee to foot</td>
-      <td></td>
+      <th scope="row">USER</th>
+      <td>DATE</td>
+      <td>SHOULDER</td>
+      <td>RIGHT SHOULDER TO ELBOW </td>
+      <td>RIGHT ELBOW TO HAND </td>
+      <td>LEFT SHOULDER TO ELBOW</td>
+      <td>LEFT ELBOW TO HAND</td>
+      <td>RIGHT WAIST TO KNEE </td>
+      <td> RIGHT KNEE TO FOOT</td>
+      <td>LEFT WAIST TO KNEE</td>
+      <td>LFET KNEE TO FOOT</td>
+      <td> </td>
     </tr>
 
     {% for i in val %}
@@ -45,13 +45,13 @@
       <td>&nbsp;{{i['right_knee_to_foot']}}</td>
       <td>&nbsp;{{i['left_waist_to_knee']}}</td>
       <td>&nbsp;{{i['left_knee_to_foot']}}</td>
-<td><p><a href="editmesview?id={{i['bd_id']}}#about">Edit</a></p>
-      <p><a href="delete_mesr?id={{ i['bd_id'] }}#about">Delete</a></p></td>
-
+<td><p><a href="editmesview?id={{i['bd_id']}}#about">EDIT</a></p>
+      <p><a href="delete_mesr?id={{ i['bd_id'] }}#about">DELETE</a></p>
+     </td>
     </tr>
     {% endfor %}
     <tr>
-      <th colspan="11" scope="row"><a href="addbodyuser#about">Add new member</a></th>
+      <th colspan="11" scope="row"><a href="addbodyuser#about">ADD MEMBER</a></th>
     </tr>
   </table>
 </form>

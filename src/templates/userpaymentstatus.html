@@ -1,0 +1,28 @@
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
+<!--<title>Untitled Document</title>-->
+<!--</head>-->
+{% extends "userdash.html" %}
+{% block body %}
+<body><h2>PAYMENT STATUS PACKAGE</h2>
+<form id="form1" name="form1" method="post" action="paystatus">
+  <table width="200" border="1" class="table table-primary table-bordered table-hover">
+    <tr><th>SI NO</th>
+      <th>PACKAGE NAME </th>
+      <th>PRICE</th>
+      <th>DATE</th>
+    </tr>
+    {% for i in  val %}
+    <tr><th>{{loop.index}}</th>
+      <td>{{i['p_name']}}</td>
+      <td>{{i['amount']}}</td>
+      <td>{{i['date']}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</form>
+</body>
+<!--</html>-->
+{% endblock %}

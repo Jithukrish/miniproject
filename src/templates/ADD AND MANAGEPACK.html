@@ -1,0 +1,40 @@
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
+<!--<title>-->
+<!--&lt;!&ndash;<MMString:LoadString id="insertbar/formsButton" />&ndash;&gt;-->
+<!--</title>-->
+<!--&lt;!&ndash; Copyright 2000, 2001, 2002, 2003 Macromedia, Inc. All rights reserved. &ndash;&gt;-->
+<!--</head>-->
+{% extends "admindash.html" %}
+{% block body %}
+<body><h2>PACKAGE MANAGEMENT</h2>
+<form id="form1" name="form1" method="post" action="addpackage2#about">
+  <table width="200" border="1" class="table table-bordered table-primary table-hover" >
+    <tr><TH>SI NO</TH>
+      <th scope="row">PACKAGE NAME </th>
+      <th>PRICE</th>
+      <th> DESCRIPTION </th>
+      <th> </th>
+    </tr>
+{% for i in val %}
+    <tr>
+        <TD>{{loop.index}}</TD>
+      <th scope="row">{{i['p_name']}}</th>
+      <td>{{i['price']}}</td>
+      <td>&nbsp;{{i['description']}}</td>
+      <td><p><a href="editpackage?id={{i['pack_id']}}#about">EDIT</a></p>
+      <p><a href="deletepack?id={{i['pack_id']}}">DELETE</a></p></td>
+
+    </tr>
+    {% endfor %}
+    <tr>
+      <th colspan="4" scope="row"> <input type="submit" name="Submit" value="ADD"  class="btn btn-outline-primary"/></th>
+        <TD></TD>
+    </tr>
+  </table>
+</form>
+</body>
+<!--</html>-->
+{% endblock %}

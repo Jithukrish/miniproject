@@ -6,25 +6,26 @@
 <!--</head>-->
 {% extends "admindash.html" %}
 {% block body %}
+
 <body>
 <H2> MEMBERSHIP STATUS</H2>
 <form id="form1" name="form1" method="post" action="membership">
-  <table width="200" border="1" class="table table-dark table-bordered table-hover">
+  <table width="200" border="1" class="table table-primary table-bordered table-hover">
     <tr>
-      <th scope="row">Gym name</th>
+      <th scope="row">GYM NAME</th>
       <th width=""215" scope="row">OASIS FITNESS CLUB</th>
       <td>&nbsp;</td>
     </tr>
     <tr>
-      <th scope="row">Username</th>
-      <td>Amount</td>
-      <td>date</td>
+      <th scope="row">USER NAME</th>
+      <th>AMOUNT</th>
+      <th>DATE</th>
 
     </tr>
     {% for i in val%}
     <tr>
       <th scope="row">{{i['username']}}</th>
-      <td>{{i['amount']}}</td>
+      <td>{{i['payment_status']}}</td>
       <td>{{i['date']}}</td>
       {% endfor %}
     </tr>

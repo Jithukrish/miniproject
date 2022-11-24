@@ -8,19 +8,21 @@
 {% block body %}
 <body><h2>PERSONAL TRAINER TIME</h2>
 <form id="form1" name="form1" method="post" action="shedule_user_to_tr1">
-  <table width="200" border="1" class="table table-bordered table-dark table-hover">
+  <table width="200" border="1" class="table table-bordered table-primary table-hover">
     <tr>
-      <th scope="row">User name </th>
-      <td>DAY </td>
-      <td>From Time </td>
-      <td>To Time</td>
+      <!--<th scope="row">Trainer name </th>-->
+        <th>SI NO</th>
+      <th>From Time </th>
+      <th>To Time</th>
+      <th>Date</th>
     </tr>
      {% for i in val %}
     <tr>
-      <th scope="row">{{i['username']}}</th>
-      <td>&nbsp;{{i['day']}}</td>
+      <!--<th scope="row">{{i['name']}}</th>-->
+      <th>{{loop.index}}</th>
       <td>{{i['from_time']}}</td>
       <td>&nbsp;{{i['to_time']}}</td>
+      <td>{{i['date']}}</td>
     </tr>
      {% endfor %}
   </table>

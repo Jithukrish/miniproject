@@ -1,0 +1,38 @@
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
+<!--<title>-->
+<!--&lt;!&ndash;<MMString:LoadString id="insertbar/formsButton" />&ndash;&gt;-->
+<!--</title>-->
+<!--&lt;!&ndash; Copyright 2000, 2001, 2002, 2003 Macromedia, Inc. All rights reserved. &ndash;&gt;-->
+<!--&lt;!&ndash; Copyright 2000, 2001, 2002, 2003 Macromedia, Inc. All rights reserved. &ndash;&gt;-->
+<!--</head>-->
+{% extends "userdash.html" %}
+{% block body %}
+<body><H2>EQUIPMENTS</H2>
+<form id="form1" name="form1" method="post" action="EQUIPMENTADD1">
+  <table width="200" border="1" CLASS="TABLE table-primary TABLE-BORDERED TABLE-HOVER">
+    <tr><th>SI NO</th>
+      <th scope="row">NAME</th>
+      <th>DESCRIPTION</th>
+      <th>IMAGE</th>
+
+    </tr>
+    {% for i in val %}
+    <tr><th>{{loop.index}}</th>
+      <th scope="row">&nbsp;{{i['e_name']}}</th>
+      <td>&nbsp;{{i['description']}}</td>
+      <td><img src="../static/equipmemts/{{i['image']}}" width="100" height="100"/></td>
+      <!--<td><a href="EDITEQUIPMENT?id={{i['e_id']}}">EDIT</a></td>-->
+      <!--<td><a href="EDITEQUIPMENT2?id={{i['e_id']}}">DELETE</a></td>-->
+    </tr>
+    {% endfor %}
+    <!--<tr>-->
+      <!--<th colspan="5" scope="row"> <input type="submit" name="Submit" value="ADD" /></th>-->
+    <!--</tr>-->
+  </table>
+</form>
+</body>
+<!--</html>-->
+{% endblock %}

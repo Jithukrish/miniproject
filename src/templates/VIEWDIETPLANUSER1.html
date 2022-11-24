@@ -1,0 +1,40 @@
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
+<!--<title>-->
+<!--&lt;!&ndash;<MMString:LoadString id="insertbar/formsButton" />&ndash;&gt;-->
+<!--</title>-->
+<!--&lt;!&ndash; Copyright 2000, 2001, 2002, 2003 Macromedia, Inc. All rights reserved. &ndash;&gt;-->
+<!--&lt;!&ndash; Copyright 2000, 2001, 2002, 2003 Macromedia, Inc. All rights reserved. &ndash;&gt;-->
+<!--</head>-->
+{% extends "userdash.html" %}
+{% block body %}
+<body><h2>VIEW DIETPLAN</h2>
+<form id="form1" name="form1" method="post" action="adddiet2">
+  <table width="200" border="1" CLASS="TABLE table-primary TABLE-BORDERED TABLE-HOVER">
+    <tr>
+      <th>SL NO</th>
+      <th scope="row">User name </th>
+      <td>Diet name </td>
+      <td> Description </td>
+
+    </tr>
+    {% for i in val %}
+    <tr>
+      <th>{{loop.index}}</th>
+      <th scope="row">&nbsp;{{i['username']}}</th>
+      <td>{{i['dietname']}}</td>
+      <td>&nbsp;{{i['description']}}</td>
+      <!--<td><p><a href="editdiet1?id={{i['d_id']}}">Edit</a></p>-->
+      <!--<p><a href="deletediet?id={{i['d_id']}}">Delete</a></p></td>-->
+    </tr>
+    {% endfor %}
+    <!--<tr>-->
+      <!--<th colspan="4" scope="row"> <input type="submit" name="Submit" value="Add" class="btn btn-primary" /></th>-->
+    <!--</tr>-->
+  </table>
+</form>
+</body>
+<!--</html>-->
+{% endblock %}

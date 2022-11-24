@@ -45,7 +45,7 @@ def login():
     val=(username,password)
     res=selectone(qry,val)
     if res is None:
-        return '''<script>alert("invalid");window.location="/"</script>'''
+        return '''<script>alert("invalid");window.location="/log"</script>'''
     elif res['user type'] == "admin":
         session['lid'] = res['l_id']
         return '''<script>alert("valid");window.location="admin"</script>'''
@@ -62,7 +62,7 @@ def login():
 
 
     else:
-        return '''<scrpit>alert("invalid");window.location="/"</scrpit>'''
+        return '''<scrpit>alert("invalid");window.location="/log"</scrpit>'''
 
 #adin functions
 @app.route('/admin')
@@ -82,22 +82,29 @@ def viewuser():
 @app.route('/add-trainer',methods=['post'])
 @login_required
 def addTraner():
+    try:
         User = request.form['textfield']
         Place = request.form['textfield2']
         Gender = request.form['RadioGroup1']
         Email = request.form['textfield4']
         DOB = request.form['textfield5']
         Phoneno = request.form['textfield3']
+        qualification=request.form['select']
         type = request.form['textfield6']
         u_name = request.form['textfield7']
         password = request.form['textfield8']
         qry = "INSERT INTO `login` VALUES(NULL,%s,%s,'trainer')"
         val = (u_name, password)
         id = iud(qry, val)
-        qry1 = "INSERT INTO `trainer` VALUES(NULL,%s,%s,%s,%s,%s,%s,%s,%s)"
-        val1 = (str(id), User, Place, Gender,Phoneno,Email,DOB,type)
+        qry1 = "INSERT INTO `trainer` VALUES(NULL,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        val1 = (str(id), User, Place, Gender,Phoneno,Email,DOB,type,qualification)
         iud(qry1, val1)
+
         return '''<script>alert("Registerd successfuly");window.location="viewtrainer"</script>'''
+    except Exception as e:
+        print(e)
+        return '''<script>alert("Duplicate Entry!!!!!!!!!!1");window.location="viewtrainer"</script>'''
+
 #view trainer
 @app.route('/viewtrainer')
 @login_required
@@ -115,10 +122,29 @@ def addtrainer():
     return render_template("trainer.html")
 @app.route('/verifytrainer')
 def verft():
-    return render_template("admin verify req.html")
-@app.route('/assigntrain')
-def asstrain():
-    return render_template("admin verify req2.html")
+    q="SELECT `registration`.`username`,`request`.* FROM `registration` JOIN `request` ON `registration`.`l_id`=`request`.`u_id`"
+    res=selectall(q)
+    return render_template("admin verify req.html",val=res)
+
+@app.route('/assigntrain/<rid>',methods=['get','post'])
+def asstrain(rid):
+    if request.method=="POST":
+        tid = request.form['select']
+        q = "UPDATE request set`t_id`=%s,status='assigned' where r_id=%s"
+        iud(q, (tid,rid))
+        return '''<script>alert("Assigned successfuly");window.location="/verifytrainer"</script>'''
+
+    else:
+        q="SELECT * FROM `trainer`"
+        res=selectall(q)
+        return render_template("ASSIGN_TRAINER.html",val=res)
+
+
+# @app.route('/assign')
+# def assign():
+#
+#     return render_template("ASSIGN_TRAINER.html",val)
+
 #add services
 
 @app.route('/addservic')
@@ -243,11 +269,13 @@ def viewbody():
     return render_template("view measurement(2).html",val=res)
 
 
+
+
 # user view bodymeasurement
 @app.route('/viewbodys')
 def viewbodys():
-    q="SELECT * FROM `bodymeasurement`"
-    res=selectall(q)
+    q="SELECT * FROM `bodymeasurement` where u_id=%s "
+    res = selectall2(q, session['lid'])
     return render_template("view measurement user.html",val=res)
 
 #add new member in bodymeasurement table
@@ -280,23 +308,66 @@ def sndreq():
   return render_template("user send req.html")
 @app.route('/send',methods=["post"])
 def snd():
-    req=request.form['textfield']
-    query="INSERT INTO `request` VALUES(NULL,%s,'0',%s,'pending',CURDATE())"
-    vall=(str(session['lid']),req)
-    iud(query,vall)
-    return '''<script>alert("request sended successfully");window.location="/userhome"</script>'''
+    q="SELECT * FROM `request` WHERE `u_id`=%s"
+    res=selectone(q,session['lid'])
+    if res is None:
+        req=request.form['textfield']
+        query="INSERT INTO `request` VALUES(NULL,%s,'0',%s,'pending',CURDATE())"
+        vall=(str(session['lid']),req)
+        iud(query,vall)
+        return '''<script>alert("request sended successfully");window.location="/userhome"</script>'''
+
+    else:
+        return '''<script>alert("already requested");window.location="/userhome"</script>'''
+
 
 #check request user
 
 @app.route('/checkreq')
 def checreq():
-
-    r="SELECT * FROM  `request` WHERE u_id=%s"
+    r="SELECT * FROM  `request` JOIN `trainer` ON `request`.`t_id`=`trainer`.`t_id` AND `request`.`u_id`=%s"
     res=selectall2(r,session['lid'])
     return render_template("admin reqview.html",val=res)
 @app.route('/trainerhome')
 def trainer():
     return render_template("trainerhome.html")
+###########################################################################################################################################
+############################ATTENDANCE$#####################################
+@app.route('/ATTANDANCEMARK')
+def ATTANDANCEMARK():
+     q="SELECT * FROM `registration`"
+     res=selectall(q)
+     return render_template("MARKATTENDANCE.html",val=res)
+
+@app.route('/ATTANDANCEMARK2')
+def ATTANDANCEMARK2():
+    id = request.args.get('id')
+    session['l_id'] = id
+    return render_template("ATTANDANCEMARK.html")
+
+@app.route('/ATTANDANCEMARK3',methods=['post'])
+def ATTANDANCEMARK3():
+    attentance=request.form['RadioGroup1']
+    qr="SELECT * FROM attendance WHERE `date`=CURDATE() AND `u_id`=%s"
+    res=selectone(qr,session['l_id'])
+    if res is None:
+        q = "INSERT INTO `attendance` VALUES(NULL,%s,%s,CURDATE(),%s)"
+        val=(str(session['l_id']),str(session['lid']),attentance)
+        iud(q,val)
+        return '''<script>alert("Attentance added successfully");window.location="/ATTANDANCEMARK"</script>'''
+    else:
+        return '''<script>alert("Attentance already added");window.location="/ATTANDANCEMARK"</script>'''
+
+@app.route('/useratten')
+def useratten():
+     q = "SELECT `trainer`.`name`,`attendance`.* FROM `trainer` JOIN `attendance` ON `trainer`.l_id=`attendance`.t_id WHERE `attendance`.`u_id`=%s"
+     res = selectall2(q,session['lid'])
+     print(res)
+     return render_template("VIEWATTENDANCEUSER.html", val=res)
+
+
+
+
 
 
 
@@ -385,6 +456,8 @@ def prhour():
     qq = "SELECT * FROM `registration`,`request` WHERE `request`.`u_id`=`registration`.`l_id` AND `request`.`status`='accepted' "
     res=selectall(q)
     res1=selectall(qq)
+    print(res,"+++++++++++++++++++++++++++")
+    print(res1,"============================")
     return render_template("userpersonal.html",val=res,val2=res1)
 
 
@@ -405,18 +478,45 @@ def shedule_user_to_tr1():
 
      username=request.form['select']
      trainer=request.form['select2']
-     date = request.form['textfield']
-     time = request.form['textfield2']
-     qry1 = "INSERT INTO `schedule personal user` VALUES(NULL,%s,%s,%s,%s)"
-     val1 = (username,trainer,date, time)
+
+     from_time = request.form['textfield2']
+     to_time = request.form['textfield3']
+     qry1 = "INSERT INTO `schedule personal user` VALUES(NULL,%s,%s,curdate(),%s,%s)"
+     val1 = (username,trainer,from_time,to_time)
+     print("=======================================================================================")
      iud(qry1,val1)
      return '''<script>alert("Add successfuly");window.location="shedule_user_to_tr"</script>'''
+
+
+
+@app.route('/personaltimeforuser')
+def personaltimeforuser():
+    qry="select * from registration"
+    res=selectall(qry)
+    qry1 = "select * from trainer"
+    res1 = selectall(qry1)
+
+    return render_template("personal time user.html",val=res,val1=res1)
+
+@app.route('/personaltimeforuser1',methods=['post'])
+def personaltimeforuser1():
+
+     trainer=request.form['select']
+     username=request.form['select1']
+     from_time = request.form['textfield']
+     to_time = request.form['textfield2']
+     qry1 = "INSERT INTO `schedule personal user` VALUES(NULL,%s,%s,%s,%s)"
+     val1 = (username,trainer,from_time, to_time)
+     iud(qry1,val1)
+     return '''<script>alert("Add successfuly");window.location="personaltimeforuser"</script>'''
 
 #view personal hour
 @app.route('/prhourh')
 def prhourh():
-    q="SELECT*FROM `work_hourper` WHERE `u_id`=%s "
+    q="SELECT `trainer`.*,`schedule personal user`.*  FROM `trainer` JOIN `schedule personal user` ON `trainer`.l_id=`schedule personal user`.`t_id` WHERE `schedule personal user`.`u_id`=%s"
     res=selectall2(q,session['lid'])
+    print(session['lid'])
+    print(res,"=================")
     return render_template("personaltime.html",val=res)
 
 
@@ -484,10 +584,9 @@ def makemembership():
 
 
 
-    amount = request.form['textfield']
 
-    qry1 = "INSERT INTO `membership` VALUES(NULL,%s,curdate(),%s)"
-    val1 = (session['lid'],amount)
+    qry1 = "INSERT INTO `membership` VALUES(NULL,%s,curdate(),'1000')"
+    val1 = (session['lid'])
     iud(qry1, val1)
     return '''<script>alert("Add successfuly");window.location="userhome"</script>'''
 
@@ -508,16 +607,16 @@ def viewusertrainer():
 @app.route('/viewmember')
 def viewmember():
     id=request.args.get('id')
-    qry="SELECT`registration`.`username`,`payment`.`amount`,`date` FROM`registration` JOIN`payment`ON`registration`.`l_id`=`payment`.`u_id` WHERE`registration`.`l_id`=%s"
+    qry="SELECT `registration`.*,`membership`.* FROM `registration` JOIN `membership` ON `registration`.`l_id`=`membership`.`u_id` WHERE `registration`.`l_id`=%s"
     res=selectall2(qry,id)
     return render_template("membershippage.html",val=res)
 
-@app.route('/fee_dtl')
-def fee_dtl():
-    qry="SELECT`registration`.`username`,`payment`.`amount`,`date` FROM`registration` JOIN`payment`ON`registration`.`l_id`=`payment`.`u_id` WHERE`registration`.`l_id`=%s"
-    res=selectall2(qry,session['lid'])
-    return render_template("fee_dtl.html",val=res)
-
+# @app.route('/fee_dtl')
+# def fee_dtl():
+#     qry="SELECT`registration`.`username`,`payment`.`amount`,`date` FROM`registration` JOIN`payment`ON`registration`.`l_id`=`payment`.`u_id` WHERE`registration`.`l_id`=%s"
+#     res=selectall2(qry,session['lid'])
+#     return render_template("fee_dtl.html",val=res)
+#
 
 #join membership
 
@@ -533,57 +632,389 @@ def mum():
     q="SELECT `registration`.*,membership.date FROM`registration`  JOIN membership ON `registration`.l_id=`membership`.u_id"
     res=selectall(q)
     return render_template("viewmember.html",val=res)
+################################################################################################################################################
+# WORKOUT
+
+
+
+@app.route('/WORKOUTADD1')
+def WORKOUTADD1():
+    q="SELECT *FROM `workout_user`"
+    res=selectall(q)
+    return render_template("WORKOUTVIEW.html",val=res)
+
+@app.route('/WORKOUTADD2',methods=['post'])
+def WORKOUTADD2():
+
+    return render_template("WORKOUTADD.html")
+
+
+@app.route('/WORKOUTADD', methods=['post'])
+def WORKOUTADD():
+    workout = request.form['textfield']
+    tip = request.form['textarea']
+
+    qry1 = "INSERT INTO `workout_user`VALUES(NULL,%s,%s,%s)"
+    val1 = (session['lid'],workout,tip)
+    iud(qry1, val1)
+    return '''<script>alert("added successfuly");window.location="WORKOUTADD1 "</script>'''
+
+#################################EDIT##########################################
+
+@app.route('/EDITWORKOUT')
+def EDITWORKOUT():
+    id = request.args.get('id')
+    session['wrk_id'] = id
+    q = "SELECT * FROM `workout_user` WHERE `wrk_id`=%s"
+    res = selectone(q, id)
+    return render_template("WORKOUTADD1.html", val=res)
+
+@app.route('/EDITWORKOUT1',methods=['post'])
+def EDITWORKOUT1():
+    workout = request.form['textfield']
+    tip = request.form['textarea']
+    print(tip)
+
+    qry1 = "update `workout_user` set workout=%s,tip=%s where wrk_id=%s"
+    val1 = (workout,tip,session['wrk_id'])
+    iud(qry1, val1)
+    return '''<script>alert("edit successfuly");window.location="WORKOUTADD1 "</script>'''
+#####################DELETE###################
+
+@app.route('/EDITWORKOUT2')
+def EDITWORKOUT2():
+    id = request.args.get('id')
+    q="delete  FROM `workout_user` WHERE `wrk_id`=%s"
+    res=iud(q,id)
+    return '''<script>alert("delete successfuly");window.location="WORKOUTADD1"</script>'''
+
+
+
+
+@app.route('/VIEWWORKOUTUSER')
+def VIEWWORKOUTUSER():
+    q="SELECT *FROM `workout_user`"
+    res=selectall(q)
+    return render_template("WORKOUTVIEWUSER.html",val=res)
+#################################################################################################################################################
+#EQUIPMENT
+@app.route('/EQUIPMENTADD')
+def EQUIPMENTADD():
+    q="SELECT *FROM `equipments`"
+    res=selectall(q)
+    return render_template("EQUIPMENTVIEWADMIN.html",val=res)
+
+@app.route('/EQUIPMENTADD1',methods=['post'])
+def EQUIPMENTADD1():
+
+    return render_template("EQUIPMENTADD1.html")
+
+@app.route('/EQUIPMENTADD2', methods=['post'])
+def EQUIPMENTADD2():
+    e_name= request.form['textfield']
+    description = request.form['textfield2']
+    image = request.files['file']
+    n=secure_filename(image.filename)
+    image.save(os.path.join('static/equipmemts',n))
+
+    qry1 = "INSERT INTO `equipments`VALUES(NULL,%s,%s,%s)"
+    val1 = (e_name,description,n)
+    iud(qry1, val1)
+    return '''<script>alert("added successfuly");window.location="EQUIPMENTADD "</script>'''
+
+
+
+
+
+@app.route('/EDITEQUIPMENT')
+def EDITEQUIPMENT():
+    id = request.args.get('id')
+    session['e_id'] = id
+    q = "SELECT * FROM `equipments` WHERE `e_id`=%s"
+    res = selectone(q, id)
+    return render_template("EQUIPMENTADD2.html", val=res)
+
+@app.route('/EDITEQUIPMENT1',methods=['post'])
+def EDITEQUIPMENT1():
+    try:
+        e_name = request.form['textfield']
+        description = request.form['textfield2']
+        image = request.files['file']
+        n = secure_filename(image.filename)
+        image.save(os.path.join('static/equipmemts', n))
+
+        qry1 = "update `equipments` set e_name=%s,description=%s,image=%s where e_id=%s"
+        val1 = (e_name,description,n,session['e_id'])
+        iud(qry1, val1)
+        return '''<script>alert("edit successfuly");window.location="EQUIPMENTADD "</script>'''
+    except Exception as e:
+        e_name = request.form['textfield']
+        description = request.form['textfield2']
+
+
+        qry1 = "update `equipments` set e_name=%s,description=%s where e_id=%s"
+        val1 = (e_name, description, session['e_id'])
+        iud(qry1, val1)
+        return '''<script>alert("edit successfuly");window.location="EQUIPMENTADD "</script>'''
+
+
+
+#####DELETE
+
+@app.route('/EDITEQUIPMENT2')
+def EDITEQUIPMENT2():
+    id = request.args.get('id')
+    q="delete  FROM `equipments` WHERE `e_id`=%s"
+    res=iud(q,id)
+    return '''<script>alert("delete successfuly");window.location="EQUIPMENTADD"</script>'''
+
+######USER VIEW EQUIPMENT
+
+
+@app.route('/VIEWEQUIPMENTUSER')
+def VIEWEQUIPMENTUSER():
+    q="SELECT *FROM `equipments`"
+    res=selectall(q)
+    return render_template("EQUIPMENTVIEWUSER.html",val=res)
+####################################################################################################################################
+##########################send back
+@app.route('/feedbacksend')
+def feedbacksend():
+    return render_template("SENDFEEDBACK.html")
+
+@app.route('/feed',methods=['post'])
+def feed():
+
+        feedback= request.form['textfield']
+
+        qry1 ="INSERT INTO `feedback` VALUES (NULL,%s,%s,curdate())"
+        val1 = (session['lid'],feedback)
+        iud(qry1, val1)
+        return '''<script>alert("send successfuly");window.location="feedbacksend"</script>'''
+
+@app.route('/viewfeedback')
+def viewfeedback():
+    qry="SELECT * FROM `feedback` INNER JOIN `registration` ON `feedback`.u_id=`registration`.l_id"
+
+    # qry = "SELECT * FROM `feedback`"
+
+    res=selectall(qry)
+    return render_template("VIEWFEEDBACK.html",val=res)
+
+
+#########################################################################################################################################
+
+#package
+@app.route('/addpackage1',methods=['post'])
+def addpackage1():
+    packagename = request.form['textfield']
+    Amount = request.form['textfield2']
+    description = request.form['textfield3']
+    qry1 = "INSERT INTO `package`VALUES(NULL,%s,%s,%s)"
+    val1 = (packagename,Amount,description)
+    iud(qry1, val1)
+    return '''<script>alert("added successfuly");window.location="addpackage "</script>'''
+
+
+@app.route('/addpackage')
+def addpackage():
+    q="SELECT *FROM `package`"
+    res=selectall(q)
+    return render_template("ADD AND MANAGEPACK.html",val=res)
+
+@app.route('/addpackage2',methods=['post'])
+def addpackage2():
+
+    return render_template("package.html")
+
+#edit package
+@app.route('/editpackage')
+def editpackage():
+    id = request.args.get('id')
+    session['pack_id'] = id
+    q = "SELECT * FROM `package` WHERE `pack_id`=%s"
+    res = selectone(q, id)
+    return render_template("editpackage.html", val=res)
+
+@app.route('/editpackage1',methods=['post'])
+def editpackage1():
+    packagename = request.form['textfield']
+    Amount = request.form['textfield2']
+    description = request.form['textfield3']
+    qry1 = "update `package` set p_name=%s,price=%s,description=%s where pack_id=%s"
+    val1 = (packagename,Amount,description,session['pack_id'])
+    iud(qry1, val1)
+    return '''<script>alert("edit successfuly");window.location="addpackage "</script>'''
+
+
+@app.route('/deletepack')
+def deletepack():
+    id = request.args.get('id')
+    q="delete  FROM `package` WHERE `pack_id`=%s"
+    res=iud(q,id)
+    return '''<script>alert("delete successfuly");window.location="addpackage"</script>'''
+
+@app.route('/addpay8',methods=['post'])
+def addpay8():
+
+    Amount = request.form['textfield5']
+    qry1 = "INSERT INTO `payment`VALUES(NULL,%s,%s,curdate())"
+    val1 = (session['lid'],Amount)
+    iud(qry1, val1)
+    return
 
 
 
 
 
 
+#view package table
+@app.route('/viewpack')
+def viewpack():
+    q="SELECT *FROM `package` "
+    res=selectall(q)
+    return render_template("makepayment.html",val=res)
+
+@app.route('/makepack')
+def makepack():
+    id=request.args.get('id')
+    session['Pckk_id']=id
+    q = "SELECT *FROM `package`  where pack_id=%s"
+    res = selectone(q,id)
+    session['amount']=res['price']
+    print(res,"===========================")
+    return render_template("payment.html",val=res)
 
 
+#payment
+@app.route('/makepack1',methods=['post'])
+def makepack1():
+    qr="SELECT * FROM `payment` WHERE `u_id`=%s "
+    res=selectone(qr,session['lid'])
+    if res is None:
 
-#@app.route('/addpay',methods=['post'])
-#def addpay():
-  #  email = request.form['textfield3']
-   # phoneno = request.form['textfield4']
-   # Amount = request.form['textfield5']
-    #date = request.form['textfield6']
+        return render_template("PAYMENTNEW.html")
+    else:
+        return '''<script>alert("already added");window.location="viewpack"</script>'''
 
+@app.route('/paymntnew', methods=['post','get'])
+def paymntnew():
+    return render_template("PAYMENTNEW.html")
 
-
-
-   # qry1 = "INSERT INTO `payment`VALUES(NULL,%s,%s,%s,%s,%s)"
-   # val1 = (str(id),User,email,phoneno,Amount,date)
-    #iud(qry1, val1)
-    #return '''<script>alert("payment successfuly");window.location="adpayment "</script>'''
-    #return render_template("payment.html")
-
+@app.route('/paymntnew1', methods=['post','get'])
+def paymntnew1():
+    scc=request.files['file']
+    fname=secure_filename(scc.filename)
+    scc.save(os.path.join('static/screenshot',fname))
+    qry1 = "insert into payment values(null,%s,%s,%s,curdate(),%s)"
+    val1 = (session['lid'], session['Pckk_id'], session['amount'],fname)
+    iud(qry1, val1)
+    return '''<script>alert("done");window.location="userhome"</script>'''
 
 #view payment details
 
-#@app.route('/viwpay',methods=['get'])
-#def viwpay():
-   # q = "SELECT*FROM`payment`"
-   # res = selectall(q)
-    #return render_template("adpayment.html",val=res)
-
-#scheduling users
-#@app.route('/viwpay',methods=['get'])
-#def viwpay():
+@app.route('/paystatus')
+def paystatus():
+     q = "SELECT `payment`.`amount`,`date`,`registration`.`l_id`,username,`package`.`p_name` FROM `payment` JOIN `registration` ON `payment`.u_id=`registration`.`l_id` JOIN `package` ON `payment`.pk_id=`package`.pack_id"
+     res = selectall(q)
+     print
+     return render_template("adminpaymentstatus.html",val=res)
 
 
-   # q = "SELECT*FROM`payment`"
-   # res = selectall(q)
-    #return render_template("adpayment.html",val=res)
-#view scheduling
+@app.route('/userpaymentstatus')
+def userpaymentstatus():
+     q = "SELECT `payment`.`amount`,`date`,`registration`.`l_id`,username,`package`.`p_name` FROM `payment` JOIN `registration` ON `payment`.u_id=`registration`.`l_id` JOIN `package` ON `payment`.pk_id=`package`.pack_id WHERE`registration`.`l_id`=%s"
+
+     res = selectall2(q,session['lid'])
+     print
+     return render_template("userpaymentstatus.html",val=res)
 
 
+
+
+###############################################################################################################
+#DIET PLAN DETAILS
+
+@app.route('/adddiet1')
+def adddiet1():
+    q="SELECT`diet plan`.*,`registration`.username FROM `diet plan` JOIN `registration` ON `diet plan`.u_id=`registration`.l_id"
+    res=selectall(q)
+    return render_template("add and managemnet diet plan.html",val=res)
+
+@app.route('/adddiet2',methods=['post'])
+def adddiet2():
+    q="select * from registration"
+    res=selectall(q)
+
+    return render_template("DIETPLANADD.html",val=res)
+
+
+@app.route('/adddiet',methods=['post'])
+def adddiet():
+    username=request.form['select']
+    dietname = request.form['textfield']
+    description = request.form['textfield2']
+    qry1 = "INSERT INTO `diet plan`VALUES(NULL,%s,%s,%s,%s)"
+    val=(dietname,session['lid'],username,description)
+    iud(qry1, val)
+    return '''<script>alert("added successfuly");window.location="adddiet1 "</script>'''
+
+
+
+#view user diet
+@app.route('/diet')
+def diet():
+    q="SELECT`diet plan`.*,`registration`.username FROM `diet plan` JOIN `registration` ON `diet plan`.u_id=`registration`.l_id"
+    res=selectall(q)
+    return render_template("VIEWDIETPLANUSER.html",val=res)
+
+
+@app.route('/diet1')
+def diet1():
+    q="SELECT`diet plan`.*,`registration`.username FROM `diet plan` JOIN `registration` ON `diet plan`.u_id=`registration`.l_id  WHERE  l_id=%s"
+    psd=(session['lid'])
+    res=selectall2(q,psd)
+    return render_template("VIEWDIETPLANUSER1.html",val=res)
+
+############################################################edit diet##################################################################
+
+@app.route('/editdiet1')
+def editdiet1():
+    id = request.args.get('id')
+    session['d_id'] = id
+    q = "SELECT * FROM `diet plan` WHERE `d_id`=%s"
+    res = selectone(q, id)
+    qry="select * from registration"
+    res1=selectall(qry)
+    return render_template("editdietplan1.html", val=res,val1=res1)
+
+
+@app.route('/editdiet',methods=['post'])
+def editdiet():
+    username=request.form['select']
+    dietname = request.form['textfield']
+
+    description = request.form['textfield2']
+    qry1 = "update `diet plan` set u_id=%s,dietname=%s,description=%s where d_id=%s"
+    val1 = (username,dietname,description,session['d_id'])
+    iud(qry1, val1)
+    return '''<script>alert("edit successfuly");window.location="adddiet1 "</script>'''
+
+############################################################delete diet###################################################################
+
+@app.route('/deletediet')
+def deletediet():
+    id = request.args.get('id')
+    q="delete  FROM `diet plan` WHERE `d_id`=%s"
+    iud(q,id)
+    return '''<script>alert("delete successfuly");window.location="adddiet1"</script>'''
+
+########################################################################################################################
 #registration
 
 @app.route('/registration', methods=['post'])
 def registration():
-    # print(request.form)
-    # return "OOKK"
+
     User = request.form['textfield']
     Place = request.form['textfield2']
     Gender = request.form['radiobutton']
@@ -602,7 +1033,10 @@ def registration():
     val1 = (str(id),User,Place,Gender,DOB,Email,Phoneno, height,weight)
 
     iud(qry1, val1)
+
     return '''<script>alert("Registerd successfuly");window.location="/"</script>'''
+
+
 #PROFILE UPDATION CODING PART
 @app.route("/updprof")
 def updprof():
@@ -616,14 +1050,14 @@ def updpro():
     User = request.form['textfield']
     Place = request.form['textfield2']
     Gender = request.form['Radio']
-    Email = request.form['textfield3']
-    DOB = request.form['textfield5']
+    Email = request.form['email']
+    DOB = request.form['dob']
     Phoneno = request.form['textfield4']
 
 
 
     qry1 = "UPDATE `registration` SET `username`=%s,`place`=%s,`gender`=%s,`dob`=%s,`email`=%s,`ph_no`=%s  WHERE `l_id`=%s"
-    val1 = (User, Place, Gender,Email, DOB,Phoneno,session['lid'])
+    val1 = (User, Place, Gender,DOB, Email,Phoneno,session['lid'])
     iud(qry1, val1)
     return '''<script>alert("profile updated successfuly");window.location="userhome"</script>'''
 

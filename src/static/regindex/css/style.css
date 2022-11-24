@@ -151,6 +151,16 @@ input[type="submit"],a,.agileinfo_social_icons li{
     font-size: 14px;
     border: 1px solid rgba(152, 149, 149, 0.42);
 }
+
+.w3layouts_main_grid input[type="date"], #category, #category1, #risk, #priority, .agileits_w3layouts_main_gridr input[type="time"], .w3layouts_main_grid input[type="email"], .w3layouts_main_grid textarea {
+    outline: none;
+    width: 68%;
+    background:rgba(255, 255, 255, 0.17);
+    color: #fff;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid rgba(152, 149, 149, 0.42);
+}
 .w3layouts_main_grid select {
     outline: none;
     background:rgba(255, 255, 255, 0.17);

@@ -6,22 +6,24 @@
 <!--</head>-->
 {% extends "admindash.html" %}
 {% block body %}
-<body>
+<body><H2>VERIFYING REQUEST</H2>
 <form id="form1" name="form1" method="post" action="">
-  <table width="200" border="1" class="table table-bordered table-dark table-hover">
-    <tr>
-      <th scope="row">User</th>
-      <td>Request</td>
-      <td>Date</td>
-      <td>&nbsp;</td>
+  <table width="200" border="1" class="table table-bordered TABLE-primary table-hover">
+    <tr><th>SL NO</th>
+      <th scope="row">USER</th>
+      <th>REQUEST</th>
+      <th>DATE</th>
+      <th>&nbsp;</th>
     </tr>
-    <tr>
-      <th scope="row">&nbsp;</th>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td><p><a href="#">Accept</a></p>
-      <p><a href="#">Reject</a></p></td>
+    {% for i in val %}
+    <tr><th>{{loop.index}}</th>
+      <th scope="row">{{i['username']}}</th>
+      <td>{{i['request']}}</td>
+      <td>{{i['date']}}</td>
+      <td>
+      <p><a href="assigntrain/{{ i['r_id'] }}#about" class="btn btn-primary">Assign</a></p></td>
     </tr>
+    {% endfor %}
   </table>
 </form>
 </body>

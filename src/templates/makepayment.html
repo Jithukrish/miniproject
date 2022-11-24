@@ -1,0 +1,99 @@
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
+<!--<title>Untitled Document</title>-->
+<!--</head>-->
+{% extends "userdash.html" %}
+{% block body %}
+<!--<body><h2>PAYMENT PACKAGE</h2>-->
+<!--<form id="form1" name="form1" method="post" action="viewpack">-->
+  <!--<table width="200" border="1" class="table table-bordered table-dark table-hover">-->
+    <!--<tr>-->
+      <!--<th scope="row">PACKAGE NAME</th>-->
+      <!--<td>PRICE</td>-->
+      <!--<td>DESCRIPTION</td>-->
+      <!--<td>&nbsp;</td>-->
+    <!--</tr>-->
+    <!--{% for i in val %}-->
+    <!--<tr>-->
+      <!--<th scope="row">{{i['p_name']}}</th>-->
+      <!--<td>{{i['price']}}</td>-->
+      <!--<td>{{i['description']}}</td>-->
+      <!--<td><a href="makepack?id={{i['pack_id']}}#about">Make Payment</a></td>-->
+    <!--</tr>-->
+    <!--{% endfor %}-->
+  <!--</table>-->
+<!--</form>-->
+<!--</body>-->
+
+
+
+<head>
+     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <style>
+        .card {
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2);
+  width: 70%;
+  transition: 0.2s;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(25, 72, 225, 0.2);
+}
+
+/* Add some padding inside the card container */
+.container {
+  padding: 4px 16px;
+}
+    </style>
+</head>
+
+<br>
+<form id="form1" name="form1" method="post" action="/sort">
+
+
+
+
+    <br><br>
+<table class="table table-borderless"><tr>
+    <h2 align="center"><u>MAKE PAYMENT</u></h2>
+        {% for i in val %}
+
+<td>
+        <div align="center" class="card" >
+
+            <img class="card-img-top" src="/static/fp/images/123.jpg" height="130px" width="120px" alt="Card image cap" />
+          <br>
+          <div align="center" style="color:black" class="card-body"><h1 ><b>{{i['p_name']}}</b></h1></div>
+            <div align="center" style="color:black" class="card-body"> <H3>₹{{i['price']}}</H3></div>
+          <div align="center" style="color:black" class="card-body"><H3> DESCRIPTION</H3></div>
+            <b><div align="center" style="color:blue" class="card-body"> {{i['description']}}</h5></div></b>
+            <div align="center" class="card-body"><a href="makepack?id={{i['pack_id']}}#about" class="btn btn-outline-primary">MAKE PAYMENT</a></div>
+        </div>
+    </td>
+    {% if loop.index != 0 %}
+     {% if loop.index %4 == 0 %}
+    </tr><tr>
+    {% endif %}{% endif %}
+
+
+
+          {% endfor %}
+
+
+    </tr>
+    </table>
+
+  </div>
+
+
+</form>
+<!--</html>-->
+{% endblock %}

@@ -126,7 +126,7 @@ img {
     align-items:center;
 }
 .w3l-signinform::before{
-    background-color: rgb(76 2 27 / 65%);
+    background-color: rgb(56 31 40 / 65%);
     content: "";
     position: absolute;
     top: 0;

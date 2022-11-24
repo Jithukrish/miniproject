@@ -1,0 +1,86 @@
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
+<!--<title>-->
+<!--&lt;!&ndash;<MMString:LoadString id="insertbar/formsButton" />&ndash;&gt;-->
+<!--</title>-->
+<!--&lt;!&ndash; Copyright 2000, 2001, 2002, 2003 Macromedia, Inc. All rights reserved. &ndash;&gt;-->
+<!--&lt;!&ndash; Copyright 2000, 2001, 2002, 2003 Macromedia, Inc. All rights reserved. &ndash;&gt;-->
+<!--</head>-->
+{% extends "trainerdash.html" %}
+{% block body %}
+
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+    <style>
+        form{
+            border-radius: 20px;
+            border: solid rgb(9, 8, 10);
+            transition: 2s;
+
+        }
+        form:hover{
+            transform: scale(1.03);
+        }
+        label{
+            font-weight: 500;
+
+        }
+        h1{
+            font-weight: 700;
+            color: rgb(135, 180, 238);
+        }
+        .btn-sm{
+            width:10%;
+        }
+        .container{
+            border-radius:25px;
+            padding:25px;
+
+        }
+
+
+    </style>
+
+
+<body><h2>ADD AND MANAGE DIET</h2>
+<div class="container" style="background:#b9cbcb;">
+<form id="form1" name="form1" method="post" class="p-3" action="adddiet2">
+  <table  CLASS="table table-borderless TABLE-HOVER" style="border-radius:15px">
+    <thead class="">
+    <tr>
+      <th scope="row">USER </th>
+      <th>DIET NAME </th>
+      <th> DESCRIPTION </th>
+      <th></th>
+    </tr>
+    </thead>
+    {% for i in val %}
+    <tr>
+      <th scope="row">&nbsp;{{i['username']}}</th>
+      <td>{{i['dietname']}}</td>
+      <td>&nbsp;{{i['description']}}</td>
+      <td>
+        <div class="row">
+        <a class="btn btn-info btn-sm col-md-6 " href="editdiet1?id={{i['d_id']}}">Edit</a>
+      <a class="btn btn-danger btn-sm col-md-6 " href="deletediet?id={{i['d_id']}}">Delete</a>
+          </div>
+
+      </td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <th colspan="4" scope="row"> <input type="submit" name="Submit" value="Add" class="btn btn-primary" /></th>
+    </tr>
+  </table>
+</form>
+  </div>
+</body>
+<!--</html>-->
+{% endblock %}
